@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+	<p style="font-size:170%; color:#676767">Hello, {{ user.first_name }} {{ user.last_name }}!<p>
+	
+	
+	<!--  filter-->
+	<script>  	
+	$(function() {
+		$( ".dtpick" ).datepicker({ dateFormat: 'dd/mm/yy' }).val(); <!--  filter-->({ dateFormat: "dd-mm-yy" }).val()filter-->
+	});
+	</script>
+	<center>
+<form method="post" action="">
+	From:{{ form.hidden_tag() }}
+	{{ form.dt_from(class="dtpick") }}
+
+	To:{{ form.hidden_tag() }}
+	{{ form.dt_to(class="dtpick") }}
+	
+	City:{{ form.hidden_tag() }}
+	{{ form.city (class="select-style")}}
+	
+	<button type="submit">Show</button>
+</form>
+    </center>
+	
+	
+	<!--  average values-->
+	<div id="div3">Average Income</div>
+	<div id="div4">Average Expenses</div>
+	
+	
+	<center>
+	<div id="div1">
+	{% for transaction in transactions_inc%}
+		<p>{{transaction.avg}}</p>
+	  {% endfor %}</div>
+	<div id="div2">
+	{% for transaction in transactions_exp%}
+		<p>{{transaction.avg}}</p>
+	  {% endfor %}
+	</div>
+    </center>
+
+    
+
+    <!--  chart-->	
+	<h1>{{title}}</h1>
+
+  <center> 
+    <canvas id="chart" width="800" height="400"></canvas>
+    
+	<script>
+      // bar chart data
+      var barData = {
+        labels : [
+          {% for item in transactions_plot %}
+           "{{ item.category }}",
+          {% endfor %}
+	],
+        datasets : [{
+          fillColor: "rgba(223,227,238,0.6)",
+          strokeColor: "rgba(173,183,211,1)",
+          pointColor: "rgba(151,187,205,1)",
+          data : [
+            {% for item in transactions_plot %}
+             "{{ item.summa }}",
+            {% endfor %}
+	    ]
+          }
+        ]
+      }
+     // get bar chart canvas
+     var mychart = document.getElementById("chart").getContext("2d");
+       steps = 10
+       max = {{max}}
+     // draw bar chart
+     new Chart(mychart).Bar(barData, {
+       scaleOverride: true,
+       scaleSteps: steps,
+       scaleStepWidth: Math.ceil(max / steps),
+       scaleStartValue: 0,
+       scaleShowVerticalLines: true,
+       scaleShowGridLines : true,
+       barShowStroke : true,
+       scaleShowLabels: true
+       }
+     );
+    </script>
+  </center>
+	<!--  </div-->
+{% endblock %}
+

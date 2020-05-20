@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="login-page1">
+  <div class="form1">
+  
+  <center><p style="font-size:170%; color:#eaeaea">Add new transaction</p></center>
+
+  {% for message in form.dt.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {% for message in form.category.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {% for message in form.sum_amount.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+    
+	<script>  	
+	$(function() {
+		$( ".dtpick" ).datepicker({ dateFormat: 'dd/mm/yy' }).val(); <!--  filter-->({ dateFormat: "dd-mm-yy" }).val()filter-->
+	});
+	</script>
+ 
+  <form action="{{ url_for('new') }}" method=post>
+    {{ form.hidden_tag() }}
+    
+    {{ form.dt.label }}
+    {{ form.dt (class="dtpick")}}
+    
+    {{ form.category.label }}
+    {{ form.category (class="select-style1")}}
+    
+    {{ form.sum_amount.label }}
+    {{ form.sum_amount }}
+    
+    {{ form.submit }}
+  </form>
+  
+    </div>
+</div>
+
+    
+{% endblock %}

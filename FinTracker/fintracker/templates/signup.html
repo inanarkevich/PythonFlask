@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="login-page1">
+  <div class="form1">
+  
+  <center><p style="font-size:170%; color:#eaeaea">Sign Up</p></center>
+
+  {% for message in form.first_name.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {% for message in form.last_name.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.username.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+ 
+  <form action="{{ url_for('signup') }}" method=post>
+    {{ form.hidden_tag() }}
+    
+    {{ form.first_name.label }}
+    {{ form.first_name }}
+    
+    {{ form.last_name.label }}
+    {{ form.last_name }}
+    
+    {{ form.email.label }}
+    {{ form.email }}
+
+    {{ form.username.label }}
+    {{ form.username }}
+    
+    {{ form.password.label }}
+    {{ form.password }}
+    
+    {{ form.submit }}
+  </form>
+  
+    </div>
+</div>
+
+    
+{% endblock %}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+
+{% block content %}
+  <h1>Tracker</h1>
+  
+  
+
+
+
+
+<html>
+   <head>
+	   <title> Tracker </title>
+	   <meta charset="utf-8">
+	   <link href="main.css" rel="stylesheet">
+	   
+
+
+   </head>
+   <body>
+	   
+	   
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+		
+      <h3> <a href = "{{ url_for('new') }}">Add transaction
+         </a></h3>
+	
+	<!--  filter-->
+	<script>  	
+	$(function() {
+		$( ".dtpick" ).datepicker({ dateFormat: 'dd/mm/yy' }).val(); <!--  filter-->({ dateFormat: "dd-mm-yy" }).val()filter-->
+	});
+	</script>
+	<center>
+<form method="post" action="">
+	From:{{ form.hidden_tag() }}
+	{{ form.dt_from(class="dtpick") }}
+	
+	To:{{ form.hidden_tag() }}
+	{{ form.dt_to(class="dtpick") }}
+
+	<button type="submit">Show</button>
+</form>
+    </center>
+	
+	  
+    <table class="tabela" cellspacing='0'>
+	
+	    
+	         <tr>
+			 	<th>Date</th>
+			 	<th>Sum</th>
+			 	<th>Category</th>
+			 	<th>Operation</th>
+				<th>Delete</th>
+	         </tr>
+         
+         
+         		{% for i in k %}
+		 		<tr>
+		 			<td>{{i.Date}}</td>
+		 			<td>{{i.Sum}}</td>
+		 			<td> {{i.Category}}</td>
+		 			<td>{{i.Operation}}</td>
+					<td>
+					<form method="POST" action="./delete">
+					<input type="hidden" value="{{i.Id}}" name="Id">
+					<input type="submit" value="Delete">
+					</form>					
+            	</tr>
+
+         {% endfor %}
+      </table>
+      
+      <a href = "/">Go back to home page</a>
+      
+      
+      
+      
+   </body>
+</html>
+
+{% endblock %}
+
+
